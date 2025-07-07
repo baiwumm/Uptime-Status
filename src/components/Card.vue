@@ -76,6 +76,38 @@
 
       <!-- 卡片主体：统计数据和图表 -->
       <div class="space-y-4">
+        <!-- 图片容器 - 带精致边框和悬浮动画 -->
+        <div
+          class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 p-5"
+        >
+          <!-- 主图 -->
+          <img
+            :src="`https://cdn.baiwumm.com/screenshot/${extractDomainPart(monitor.url)}.png`"
+            alt="网站缩略图"
+            class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+            style="aspect-ratio: 526/272"
+          />
+
+          <!-- 图片底部装饰条 -->
+          <div
+            class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent flex items-end p-1 pl-4"
+          >
+            <span class="text-white font-medium text-sm tracking-wider">{{ monitor.url }}</span>
+          </div>
+
+          <!-- 悬浮时显示的半透明蒙层 -->
+          <div
+            class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+          >
+            <button
+              class="px-6 py-2 bg-white/90 rounded-full text-gray-800 font-medium shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+              @click="openUrl(monitor.url)"
+            >
+              <Icon icon="ri:eye-line" class="w-5 h-5" />
+              去看看
+            </button>
+          </div>
+        </div>
         <!-- 响应时间和运行时间统计卡片 -->
         <div class="grid grid-cols-2 gap-4">
           <div class="inner-card relative">
@@ -574,6 +606,30 @@ const onAfterLeave = () => {
  * 更新移动端状态
  */
 const updateMobileState = () => (isMobile.value = window.innerWidth < 768);
+
+// 截取域名
+function extractDomainPart(url) {
+  // 创建一个URL对象
+  const urlObj = new URL(url);
+
+  // 获取主机名(hostname)
+  const hostname = urlObj.hostname;
+
+  // 分割主机名部分
+  const parts = hostname.split(".");
+
+  // 处理不同的域名情况
+  if (parts.length === 3 && parts[0] !== "www") {
+    // 类似 https://react.baiwumm.com 的情况 - 返回第一个部分
+    return parts[0];
+  } else if (parts.length === 2 || (parts.length === 3 && parts[0] === "www")) {
+    // 类似 https://baiwumm.com 或 https://www.baiwumm.com 的情况 - 返回 'www'
+    return "www";
+  }
+
+  // 默认情况
+  return hostname;
+}
 
 /**
  * 生命周期钩子
