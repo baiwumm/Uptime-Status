@@ -85,7 +85,7 @@
             :src="`https://cdn.baiwumm.com/screenshot/${extractDomainPart(monitor.url)}.png`"
             alt="网站缩略图"
             class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-            style="aspect-ratio: 526/272"
+            style="aspect-ratio: 526/274"
           />
 
           <!-- 图片底部装饰条 -->
