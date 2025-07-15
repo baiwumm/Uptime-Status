@@ -21,7 +21,7 @@
       </button>
     </Transition>
 
-    <div class="flex flex-col items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+    <div class="flex flex-col items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
       <div class="flex items-center gap-6">
         <a
           :href="pkg.repository.url"
